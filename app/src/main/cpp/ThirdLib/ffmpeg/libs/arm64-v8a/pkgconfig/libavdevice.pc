@@ -1,0 +1,14 @@
+prefix=/Users/zhouhaohao/Elmer/ffmpeg/ffmpeg/android/arm64-v8a
+exec_prefix=${prefix}
+libdir=/Users/zhouhaohao/Elmer/ffmpeg/ffmpeg/android/libs/arm64-v8a
+includedir=/Users/zhouhaohao/Elmer/ffmpeg/ffmpeg/android/arm64-v8a/include
+
+Name: libavdevice
+Description: FFmpeg device handling library
+Version: 58.13.100
+Requires: 
+Requires.private: libavformat >= 58.76.100, libavcodec >= 58.134.100, libavutil >= 56.70.100
+Conflicts:
+Libs: -L${libdir}  -lavdevice 
+Libs.private: -lm -latomic
+Cflags: -I${includedir}

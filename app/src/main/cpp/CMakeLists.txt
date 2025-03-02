@@ -11,6 +11,40 @@ cmake_minimum_required(VERSION 3.22.1)
 # build script scope).
 project("avlearning")
 
+include_directories(${CMAKE_SOURCE_DIR})
+
+# ffmpeg 4.4
+# # 定义LIBS_DIR
+set(LIBS_DIR ${CMAKE_SOURCE_DIR}/ThirdLib/ffmpeg/libs/${ANDROID_ABI})
+# 添加头文件目录
+include_directories(${CMAKE_SOURCE_DIR}/ThirdLib/ffmpeg/${ANDROID_ABI}/include)
+#  添加ffmpeg相关的so库
+# 添加库——外部引入的库
+# 库名称：avcodec（不需要包含前缀lib）
+# 库类型：SHARED，表示动态库，后缀为.so（如果是STATIC，则表示静态库，后缀为.a）
+# IMPORTED表明是外部引入的库
+add_library( avcodec SHARED IMPORTED)
+# 设置目标属性
+# 设置avcodec目标库的IMPORTED_LOCATION属性，用于说明引入库的位置
+# 还可以设置其他属性，格式：PROPERTIES key value
+set_target_properties( avcodec PROPERTIES IMPORTED_LOCATION ${LIBS_DIR}/libavcodec.so)
+
+add_library( avfilter SHARED IMPORTED)
+set_target_properties( avfilter PROPERTIES IMPORTED_LOCATION ${LIBS_DIR}/libavfilter.so)
+
+add_library( avformat SHARED IMPORTED)
+set_target_properties( avformat PROPERTIES IMPORTED_LOCATION ${LIBS_DIR}/libavformat.so)
+
+add_library( avutil SHARED IMPORTED)
+set_target_properties( avutil PROPERTIES IMPORTED_LOCATION ${LIBS_DIR}/libavutil.so)
+
+add_library( swresample SHARED IMPORTED)
+set_target_properties( swresample PROPERTIES IMPORTED_LOCATION ${LIBS_DIR}/libswresample.so)
+
+add_library( swscale SHARED IMPORTED)
+set_target_properties( swscale PROPERTIES IMPORTED_LOCATION ${LIBS_DIR}/libswscale.so)
+
+
 # Creates and names a library, sets it as either STATIC
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
@@ -26,6 +60,8 @@ project("avlearning")
 # used in the AndroidManifest.xml file.
 add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
+        codec/FFmpegDecoder.cpp
+        codec/AVImage.cpp
         native-lib.cpp)
 
 # Specifies libraries CMake should link to your target library. You
@@ -34,4 +70,10 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
 target_link_libraries(${CMAKE_PROJECT_NAME}
         # List libraries link to the target library
         android
-        log)
+        log
+        avutil
+        swresample
+        avcodec
+        avfilter
+        swscale
+        avformat)

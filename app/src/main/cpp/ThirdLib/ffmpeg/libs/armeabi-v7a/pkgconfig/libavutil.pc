@@ -1,0 +1,14 @@
+prefix=/Users/zhouhaohao/Elmer/ffmpeg/ffmpeg/android/armeabi-v7a
+exec_prefix=${prefix}
+libdir=/Users/zhouhaohao/Elmer/ffmpeg/ffmpeg/android/libs/armeabi-v7a
+includedir=/Users/zhouhaohao/Elmer/ffmpeg/ffmpeg/android/armeabi-v7a/include
+
+Name: libavutil
+Description: FFmpeg utility library
+Version: 56.70.100
+Requires: 
+Requires.private: 
+Conflicts:
+Libs: -L${libdir}  -lavutil 
+Libs.private: -pthread -lm -latomic
+Cflags: -I${includedir}

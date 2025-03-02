@@ -1,0 +1,14 @@
+prefix=/Users/zhouhaohao/Elmer/ffmpeg/ffmpeg/android/arm64-v8a
+exec_prefix=${prefix}
+libdir=/Users/zhouhaohao/Elmer/ffmpeg/ffmpeg/android/libs/arm64-v8a
+includedir=/Users/zhouhaohao/Elmer/ffmpeg/ffmpeg/android/arm64-v8a/include
+
+Name: libswresample
+Description: FFmpeg audio resampling library
+Version: 3.9.100
+Requires: 
+Requires.private: libavutil >= 56.70.100
+Conflicts:
+Libs: -L${libdir}  -lswresample 
+Libs.private: -lm -latomic
+Cflags: -I${includedir}
