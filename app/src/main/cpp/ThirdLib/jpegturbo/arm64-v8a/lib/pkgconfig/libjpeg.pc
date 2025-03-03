@@ -1,0 +1,10 @@
+prefix=/Users/zhouhaohao/Elmer/Github/libjpeg-turbo/android/arm64-v8a
+exec_prefix=/Users/zhouhaohao/Elmer/Github/libjpeg-turbo/android/arm64-v8a
+libdir=/Users/zhouhaohao/Elmer/Github/libjpeg-turbo/android/arm64-v8a/lib
+includedir=/Users/zhouhaohao/Elmer/Github/libjpeg-turbo/android/arm64-v8a/include
+
+Name: libjpeg
+Description: A SIMD-accelerated JPEG codec that provides the libjpeg API
+Version: 3.0.5
+Libs: -L${libdir} -ljpeg
+Cflags: -I${includedir}
