@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.Manifest;
 import android.widget.Toast;
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         checkPermissions();
+
+        initView();
     }
 
     /**
@@ -49,27 +52,52 @@ public class MainActivity extends AppCompatActivity {
                             Manifest.permission.WRITE_EXTERNAL_STORAGE
                     },
                     REQUEST_CODE_PERMISSIONS);
-        } else {
-            // 权限已被授予，执行相关操作
-            // Example of a call to a native method
-            TextView tv = binding.sampleText;
-            tv.setText(stringFromJNI());
         }
+        // 权限已被授予，执行相关操作
+        // Example of a call to a native method
+
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // 权限被授予
-                // Example of a call to a native method
-                TextView tv = binding.sampleText;
-                tv.setText(stringFromJNI());
-            } else {
+            if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                 // 权限被拒绝
                 Toast.makeText(this, "权限被拒绝", Toast.LENGTH_SHORT).show();
             }
+            // 权限被授予
+            // Example of a call to a native method
         }
+    }
+
+    private void initView() {
+        findViewById(R.id.FFmpegDecodeTest).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        findViewById(R.id.MultiThreadTest).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        findViewById(R.id.EGLTest).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        findViewById(R.id.DisplayTest).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }

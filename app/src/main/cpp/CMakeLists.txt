@@ -15,9 +15,9 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 # ffmpeg 4.4
 # # 定义FFMPEG_LIBS_DIR
-set(FFMPEG_LIBS_DIR ${CMAKE_SOURCE_DIR}/ThirdLib/ffmpeg/libs/${ANDROID_ABI})
+set(FFMPEG_LIBS_DIR ${CMAKE_SOURCE_DIR}/thirdlib/ffmpeg/libs/${ANDROID_ABI})
 # 添加头文件目录
-include_directories(${CMAKE_SOURCE_DIR}/ThirdLib/ffmpeg/${ANDROID_ABI}/include)
+include_directories(${CMAKE_SOURCE_DIR}/thirdlib/ffmpeg/${ANDROID_ABI}/include)
 #  添加ffmpeg相关的so库
 # 添加库——外部引入的库
 # 库名称：avcodec（不需要包含前缀lib）
@@ -47,9 +47,9 @@ set_target_properties( swscale PROPERTIES IMPORTED_LOCATION ${FFMPEG_LIBS_DIR}/l
 
 # JPEG TURBO
 # # 定义FFMPEG_LIBS_DIR
-set(JPEG_LIBS_DIR ${CMAKE_SOURCE_DIR}/ThirdLib/jpegturbo/${ANDROID_ABI}/lib)
+set(JPEG_LIBS_DIR ${CMAKE_SOURCE_DIR}/thirdlib/jpegturbo/${ANDROID_ABI}/lib)
 # 添加头文件目录
-include_directories(${CMAKE_SOURCE_DIR}/ThirdLib/jpegturbo/${ANDROID_ABI}/include)
+include_directories(${CMAKE_SOURCE_DIR}/thirdlib/jpegturbo/${ANDROID_ABI}/include)
 # 添加库——外部引入的库
 # 库名称：avcodec（不需要包含前缀lib）
 # 库类型：SHARED，表示动态库，后缀为.so（如果是STATIC，则表示静态库，后缀为.a）
@@ -78,9 +78,19 @@ set_target_properties( turbojpeg PROPERTIES IMPORTED_LOCATION ${JPEG_LIBS_DIR}/l
 # used in the AndroidManifest.xml file.
 add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
-        codec/FFmpegDecoder.cpp
+        codec/AVFFmpegDecoder.cpp
         codec/AVImage.cpp
         jpeg/AVJpegEncode.cpp
+        egl/AVEGLCore.cpp
+        egl/AVEGLSurfaceBase.cpp
+        egl/AVEGLWindowSurface.cpp
+        egl/AVEGLOffscreenSurface.cpp
+        glbase/AVGLRenderForSurface.cpp
+        glbase/AVGLRenderForNormal.cpp
+        glbase/AVTriangle.cpp
+        thread/AVTaskQueueWithSingleThread.cpp
+        thread/AVTaskQueueWithSingleGLThread.cpp
+        thread/AVTaskQueue.cpp
         native-lib.cpp)
 
 # Specifies libraries CMake should link to your target library. You
@@ -88,13 +98,6 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
 # build script, prebuilt third-party libraries, or Android system libraries.
 target_link_libraries(${CMAKE_PROJECT_NAME}
         # List libraries link to the target library
-        android
-        log
-        avutil
-        swresample
-        avcodec
-        avfilter
-        swscale
-        avformat
-        turbojpeg
-        jpeg)
+        android log EGL GLESv2
+        avutil swresample avcodec avfilter swscale avformat
+        turbojpeg jpeg)

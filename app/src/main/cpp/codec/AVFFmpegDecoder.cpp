@@ -2,7 +2,7 @@
 // Created by 周豪豪 on 2025/3/2.
 //
 
-#include "FFmpegDecoder.h"
+#include "AVFFmpegDecoder.h"
 
 /*
  * 整个初始化分为三大步
@@ -11,9 +11,9 @@
  * 3. 打开codec
  * */
 
-AVResult FFmpegDecoder::initDecoder(const std::string& filePath, bool isVideo,
-                                    AV_VIDEO_DECODE_CALLBACL videoDecodeCallback,
-                                    AV_AUDIO_DECODE_CALLBACL audioDecodeCallback) {
+AVResult AVFFmpegDecoder::initDecoder(const std::string& filePath, bool isVideo,
+                                      AV_VIDEO_DECODE_CALLBACL videoDecodeCallback,
+                                      AV_AUDIO_DECODE_CALLBACL audioDecodeCallback) {
     mFilePath = filePath;
     mIsVideoMode = isVideo;
     if (mIsVideoMode) {
@@ -102,7 +102,7 @@ AVResult FFmpegDecoder::initDecoder(const std::string& filePath, bool isVideo,
     return AV_OK;
 }
 
-AVResult FFmpegDecoder::unInitDecoder() {
+AVResult AVFFmpegDecoder::unInitDecoder() {
     if (avCodecContext != nullptr) {
         avcodec_free_context(&avCodecContext);
         avCodecContext = nullptr;
@@ -131,7 +131,7 @@ AVResult FFmpegDecoder::unInitDecoder() {
     return 0;
 }
 
-AVResult FFmpegDecoder::seekToTime(int64_t time) {
+AVResult AVFFmpegDecoder::seekToTime(int64_t time) {
     if (!mIsDecodeValid) {
         LOGE("seekToTime error because mIsDecodeValid is false");
         return AV_ERROR;
@@ -139,7 +139,7 @@ AVResult FFmpegDecoder::seekToTime(int64_t time) {
     return 0;
 }
 
-AVResult FFmpegDecoder::decodeNextFrame() {
+AVResult AVFFmpegDecoder::decodeNextFrame() {
     if (!mIsDecodeValid) {
         LOGE("seekToTime error because mIsDecodeValid is false");
         return AV_ERROR;
@@ -206,7 +206,7 @@ AVResult FFmpegDecoder::decodeNextFrame() {
     return 0;
 }
 
-AVResult FFmpegDecoder::parseAVInfo() {
+AVResult AVFFmpegDecoder::parseAVInfo() {
     if (mIsVideoMode) {
         mVideoWidth = avCodecContext->width;
         mVideoHeight = avCodecContext->height;
@@ -218,7 +218,7 @@ AVResult FFmpegDecoder::parseAVInfo() {
 }
 
 
-AVResult FFmpegDecoder::preProcessVideoFrame() {
+AVResult AVFFmpegDecoder::preProcessVideoFrame() {
     if (avFrame->width != mVideoWidth && avFrame->height != mVideoHeight || avFrame->format != mVideoPixelFormat) {
         LOGE("preProcessVideoFrame error while filePath is %s", mFilePath.c_str());
         return AV_ERROR;
@@ -246,6 +246,6 @@ AVResult FFmpegDecoder::preProcessVideoFrame() {
     return 0;
 }
 
-AVResult FFmpegDecoder::preProcessAudioFrame() {
+AVResult AVFFmpegDecoder::preProcessAudioFrame() {
     return 0;
 }

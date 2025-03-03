@@ -2,8 +2,8 @@
 // Created by 周豪豪 on 2025/3/2.
 //
 
-#ifndef AVLEARNING_FFMPEGDECODER_H
-#define AVLEARNING_FFMPEGDECODER_H
+#ifndef AVLEARNING_AVFFMPEGDECODER_H
+#define AVLEARNING_AVFFMPEGDECODER_H
 
 extern "C" {
 #include "libavcodec/avcodec.h"
@@ -22,7 +22,7 @@ extern "C" {
 using AV_VIDEO_DECODE_CALLBACL = std::function<void(int64_t , std::shared_ptr<AVRGBAImage>)>;
 using AV_AUDIO_DECODE_CALLBACL = std::function<void(int64_t, std::shared_ptr<AVRGBAImage>)>;
 
-class FFmpegDecoder {
+class AVFFmpegDecoder {
 public:
     AVResult initDecoder(const std::string& filePath, bool isVideo,
                          AV_VIDEO_DECODE_CALLBACL videoDecodeCallback,
@@ -68,4 +68,4 @@ private:
 };
 
 
-#endif //AVLEARNING_FFMPEGDECODER_H
+#endif //AVLEARNING_AVFFMPEGDECODER_H

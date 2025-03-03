@@ -12,6 +12,7 @@
 #include <string>
 #include <functional>
 #include "android/log.h"
+#include "assert.h"
 
 #define LOG_TAG "AVLearning"
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, LOG_TAG, __VA_ARGS__)
